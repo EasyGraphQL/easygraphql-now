@@ -1,6 +1,6 @@
 {
   "name": "easygraphql-now",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create GraphQL servers with mocked schema on the go",
   "bin": {
     "easygraphql-now": "./bin/easygraphql-now.js"
