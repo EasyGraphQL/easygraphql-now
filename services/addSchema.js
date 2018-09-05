@@ -8,7 +8,7 @@ const { buildSchema } = require('graphql')
  * return the path of the directory
  * @param  {String} dirName the name of the project and dirname
  */
-async function addGQLSchema (dirPath, schemaName) {
+async function addGQLSchema (dirPath, schemaName, filePath) {
   try {
     if (!dirPath) {
       throw new Error("The path can't be empty")
@@ -24,27 +24,28 @@ async function addGQLSchema (dirPath, schemaName) {
       throw new Error('The file type is not valid, it mush be .gql or .graphql')
     }
 
-    validateSchema(dirPath, schemaName)
-    await copySchemaFile(dirPath, schemaName)
-    await addSchemaName(dirPath, schemaName)
+    filePath = filePath ? path.join(path.resolve(), filePath, schemaName) : path.join(path.resolve(), schemaName)
+    validateSchema(filePath)
+    copySchemaFile(dirPath, filePath)
+    addSchemaName(dirPath, schemaName)
   } catch (err) {
     throw err
   }
 }
 
-function validateSchema (dirPath, schemaName) {
-  const schemaCode = fs.readFileSync(path.join(path.resolve(), schemaName), 'utf8')
+function validateSchema (filePath) {
+  const schemaCode = fs.readFileSync(filePath, 'utf8')
   buildSchema(schemaCode)
 }
 
-async function copySchemaFile (dirPath, schemaName) {
-  await fs.copySync(path.join(path.resolve(), schemaName), `${dirPath}/schema.gql`)
+function copySchemaFile (dirPath, filePath) {
+  fs.copySync(filePath, `${dirPath}/schema.gql`)
 }
 
-async function addSchemaName (dirPath, schemaName) {
-  const data = await fs.readFileSync(`${dirPath}/index.js`, 'utf8')
+function addSchemaName (dirPath, schemaName) {
+  const data = fs.readFileSync(`${dirPath}/index.js`, 'utf8')
   const replaceSchemaName = data.replace(/#schemaName/gm, `'${schemaName}'`)
-  await fs.outputFileSync(`${dirPath}/index.js`, replaceSchemaName)
+  fs.outputFileSync(`${dirPath}/index.js`, replaceSchemaName)
 }
 
 module.exports = addGQLSchema

@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://cdn.rawgit.com/EasyGraphQL/easygraphql-mock/baab331c/EasyGraphQL.png" alt="EasyGraphQL Mock " width="350">
+  <img src="https://cdn.rawgit.com/EasyGraphQL/easygraphql-mock/baab331c/EasyGraphQL.png" alt="EasyGraphQL now " width="350">
   <br>
   EasyGraphQL Now 
   <br>
@@ -16,12 +16,26 @@ $ npm install -g easygraphql-now
 ## Usage
 To get started with the tester, you might need to follow the next steps:
 
-### First step
-+ Visit the directory with the schema to deploy.
+### Deploy with Now ▲
++ Visit the directory with the schema to deploy or pass the schema route.
 + Be sure you have already setup [`now`](https://zeit.co/now).
 + Run `easygraphql-now`.
-+ Pass the name of the file with the schema; it must be a `.gql` or `.graphql` file.
++ Select the file.
 + It will create the server and deploy with [`now`](https://zeit.co/now), after that you will get a url with your GraphQL server.
+
+![deploy witg now](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/1.gif)
+![result witg now](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/3.gif)
+
+
+### Try it locally
++ Visit the directory with the schema to deploy or pass the schema route.
++ Run `easygraphql-now --local -p=8000`.
+  + Add `-p=8000` with your favorite port, by default is 8000.
++ Select the file.
++ After that you will get a url with your local GraphQL server.
+
+![deploy locally](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/2.gif)
+
 
 # License
 ### The MIT License

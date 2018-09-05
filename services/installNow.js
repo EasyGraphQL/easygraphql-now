@@ -1,7 +1,6 @@
 'use strict'
 
 const path = require('path')
-const fs = require('fs-extra')
 const { spawnSync } = require('child_process')
 
 /**
@@ -14,7 +13,6 @@ async function createDeployWithNow (dirPath) {
       throw new Error('The path cant be empty')
     }
     await installNow(dirPath)
-    await editPackageJson(dirPath)
   } catch (err) {
     throw err
   }
@@ -26,14 +24,6 @@ function installNow (dirPath) {
       cwd: dirPath
     }))
   })
-}
-
-async function editPackageJson (dirPath) {
-  const data = await fs.readFileSync(`${dirPath}/package.json`, 'utf8').toString().split('\n')
-  const scriptPosition = data.indexOf('  "scripts": {')
-  data.splice(scriptPosition + 1, 0, '    "start": "node index.js",')
-  const text = data.join('\n')
-  await fs.outputFileSync(`${dirPath}/package.json`, text)
 }
 
 module.exports = createDeployWithNow

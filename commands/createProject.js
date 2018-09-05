@@ -1,6 +1,8 @@
 const inquirer = require('inquirer')
 const ora = require('ora')
 const fs = require('fs-extra')
+const path = require('path')
+const argv = require('minimist')(process.argv.slice(2))
 
 const spinner = ora('Creating GraphQL server! 🚀')
 
@@ -9,14 +11,9 @@ const createStarterFiles = require('../services/createStarterFiles')
 const addGQLSchema = require('../services/addSchema')
 const installNow = require('../services/installNow')
 const deployNow = require('../services/deployNow')
+const runLocal = require('../services/runLocal')
 
 const questions = [
-  {
-    type: 'input',
-    name: 'schemaName',
-    message: 'Schema file name',
-    validate: (schemaName) => typeof schemaName === 'string'
-  },
   {
     type: 'confirm',
     name: 'graphiql',
@@ -25,18 +22,59 @@ const questions = [
 ]
 
 function createProject () {
-  inquirer.prompt(questions).then(answers => handleResponse(answers))
+  let fileName
+  let filePath
+
+  const arg = argv._.length > 0 ? argv._[0] : false
+  const local = argv.local ? argv.local : false
+  const port = argv.p && argv.p > 999 ? argv.p : 8000
+
+  if (arg && (arg.includes('.gql') || arg.includes('.graphql')) && fs.existsSync(arg)) {
+    fileName = arg
+  } else if (arg && fs.existsSync(arg)) {
+    let files = fs.readdirSync(arg)
+    files = files.filter(file => file.includes('.gql') || file.includes('.graphql'))
+    const options = {
+      type: 'list',
+      name: 'schemaName',
+      message: 'Schema file name',
+      choices: files
+    }
+    questions.unshift(options)
+    filePath = arg
+  } else {
+    let files = fs.readdirSync(path.resolve())
+    files = files.filter(file => file.includes('.gql') || file.includes('.graphql'))
+    if (files.length === 0) {
+      console.log('> Error: There are no GraphQL schema in this dir! ❌')
+      process.exit(1)
+    }
+    const options = {
+      type: 'list',
+      name: 'schemaName',
+      message: 'Schema file name',
+      choices: files
+    }
+    questions.unshift(options)
+  }
+
+  inquirer.prompt(questions).then(answers => handleResponse(answers, fileName, filePath, local, port))
 }
 
-async function handleResponse (answers) {
+async function handleResponse (answers, fileName, filePath, local, port) {
   let folderPath
   try {
+    fileName = fileName || answers['schemaName']
     spinner.start()
     folderPath = await createPackage()
-    await createStarterFiles(folderPath, answers['graphiql'])
-    await addGQLSchema(folderPath, answers['schemaName'])
-    await installNow(folderPath)
-    deployNow(folderPath)
+    await createStarterFiles(folderPath, answers['graphiql'], port)
+    await addGQLSchema(folderPath, fileName, filePath)
+    if (!local) {
+      await installNow(folderPath)
+      deployNow(folderPath)
+    } else {
+      runLocal(folderPath, port)
+    }
     spinner.stop()
   } catch (err) {
     spinner.stop()
