@@ -23,8 +23,8 @@ To get started with the tester, you might need to follow the next steps:
 + Select the file.
 + It will create the server and deploy with [`now`](https://zeit.co/now), after that you will get a url with your GraphQL server.
 
-![deploy witg now](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/1.gif)
-![result witg now](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/3.gif)
+<img src="https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/1.gif" width="400px">
+<img src="https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/3.gif" width="400px">
 
 
 ### Try it locally
@@ -34,7 +34,8 @@ To get started with the tester, you might need to follow the next steps:
 + Select the file.
 + After that you will get a url with your local GraphQL server.
 
-![deploy locally](https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/2.gif)
+<img src="https://cdn.rawgit.com/EasyGraphQL/easygraphql-now/925c00ce/2.gif" width="400px">
+
 
 
 # License
