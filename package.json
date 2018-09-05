@@ -1,0 +1,34 @@
+{
+  "name": "easygraphql-now",
+  "version": "0.0.1",
+  "description": "Create GraphQL servers with mocked schema on the go",
+  "bin": {
+    "easygraphql-now": "./bin/easygraphql-now.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/EasyGraphQL/easygraphql-now",
+  "author": {
+    "name": "EasyGraphQL",
+    "url": "https://github.com/EasyGraphQL"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EasyGraphQL/easygraphql-now"
+  },
+  "bugs": {
+    "url": "https://github.com/EasyGraphQL/easygraphql-now/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "clipboardy": "^1.2.3",
+    "fs-extra": "^5.0.0",
+    "graphql": "^14.0.0",
+    "inquirer": "^3.3.0",
+    "ora": "^1.3.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
