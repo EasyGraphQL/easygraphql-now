@@ -37,6 +37,11 @@ To get started with the tester, you might need to follow the next steps:
 <img src="gif/2.gif" width="500px">
 
 
+### Other useful packages for GraphQL
+
++ [easygraphql-mock](https://www.npmjs.com/package/easygraphql-mock)
++ [easygraphql-tester](https://www.npmjs.com/package/easygraphql-tester)
++ [easygraphql-format-error](https://www.npmjs.com/package/easygraphql-format-error)
 
 # License
 ### The MIT License
