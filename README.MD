@@ -9,6 +9,9 @@
 `easygraphql-now` is a node library used to create servers with mocks of the schema you pass. 
 
 ## Installation
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/EasyGraphQL/easygraphql-now.svg)](https://greenkeeper.io/)
+
 ```bash
 $ npm install -g easygraphql-now
 ```
