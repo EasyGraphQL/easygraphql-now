@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/EasyGraphQL/easygraphql-now/master/logo.png" alt="EasyGraphQL now " width="350">
   <br>
-  EasyGraphQL Now 
+    easygraphql-now
   <br>
   <br>
 </h1>
@@ -10,7 +10,7 @@
 
 ## Installation
 ```bash
-$ npm install -g easygraphql-now
+$ npm install easygraphql-now -g
 ```
 
 ## Usage
