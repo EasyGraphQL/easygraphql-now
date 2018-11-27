@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
 const mocker = require('easygraphql-mock')
+const cors = require('cors')
 
 const app = express()
 
@@ -20,6 +21,8 @@ const schema = buildSchema(schemaCode)
 const mock = mocker(schemaCode)
 
 const resolver = Object.assign({}, mock.Query, mock.Mutation)
+
+app.use(cors())
 
 app.use('/', (req, res) => {
   graphqlHTTP({
