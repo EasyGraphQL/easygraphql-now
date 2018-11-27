@@ -13,13 +13,7 @@ const installNow = require('../services/installNow')
 const deployNow = require('../services/deployNow')
 const runLocal = require('../services/runLocal')
 
-const questions = [
-  {
-    type: 'confirm',
-    name: 'graphiql',
-    message: 'Display GraphiQL'
-  }
-]
+const questions = []
 
 function createProject () {
   let fileName
@@ -28,6 +22,16 @@ function createProject () {
   const arg = argv._.length > 0 ? argv._[0] : false
   const local = argv.local ? argv.local : false
   const port = argv.p && argv.p > 999 ? argv.p : 8000
+  const displayGraphiQL = argv.graphiql ? argv.graphiql : null
+
+  if (displayGraphiQL === null) {
+    const options = {
+      type: 'confirm',
+      name: 'graphiql',
+      message: 'Display GraphiQL'
+    }
+    questions.unshift(options)
+  }
 
   if (arg && (arg.includes('.gql') || arg.includes('.graphql')) && fs.existsSync(arg)) {
     fileName = arg
@@ -58,16 +62,17 @@ function createProject () {
     questions.unshift(options)
   }
 
-  inquirer.prompt(questions).then(answers => handleResponse(answers, fileName, filePath, local, port))
+  inquirer.prompt(questions).then(answers => handleResponse(answers, fileName, filePath, local, port, displayGraphiQL))
 }
 
-async function handleResponse (answers, fileName, filePath, local, port) {
+async function handleResponse (answers, fileName, filePath, local, port, displayGraphiQL) {
   let folderPath
   try {
     fileName = fileName || answers['schemaName']
     spinner.start()
     folderPath = await createPackage()
-    await createStarterFiles(folderPath, answers['graphiql'], port)
+    const graphiql = displayGraphiQL ? displayGraphiQL : answers['graphiql']
+    await createStarterFiles(folderPath, graphiql, port)
     await addGQLSchema(folderPath, fileName, filePath)
     if (!local) {
       await installNow(folderPath)
