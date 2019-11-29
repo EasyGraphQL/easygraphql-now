@@ -28,7 +28,11 @@ app.use('/', (req, res) => {
   graphqlHTTP({
     schema,
     rootValue: resolver,
-    graphiql: #displayGraphiql
+    graphiql: #displayGraphiql,
+    formatError: (err) => {
+      console.log(err)
+      return err
+    }
   })(req, res)
 })
 
